@@ -19,13 +19,13 @@ into fine, high-quality documentation.
 At present, this module will:
 
  * Parse a package declaration
-  * Provided it's the first thing on a line
+   * Provided it's the first thing on a line
  * Parse a named sub declaration
-  * Provided it's the first thing on a line
-  * Provided the closing brace of a multi-line sub is at the same indentation level as the declaration
+   * Provided it's the first thing on a line
+   * Provided the closing brace of a multi-line sub is at the same indentation level as the declaration
  * Parse documentation comments
-  * Provided the comment block is contiguous
-  * Provided the comment block has no whitespace separation from the documented code
+   * Provided the comment block is contiguous
+   * Provided the comment block has no whitespace separation from the documented code
 
 This module *won't*:
 
