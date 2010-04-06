@@ -52,10 +52,15 @@ module YARD
 
       class Sub < Line
         attr_accessor :comments
+        attr_accessor :visibility
 
         def initialize(*args)
           super *args
           @comments = ''
+        end
+
+        def visibility
+          @visibility ||= name.start_with?('_') ? :protected : :public
         end
 
         def comments_range
@@ -71,18 +76,18 @@ module YARD
         def parse(content, file='(string)')
           line = 0
           @stack = content.lines.collect do |src|
-            klass = case src
+            case src
+            when /^\s*use namespace::clean;/
+              :private
             when /^\s*#/
-              Comment
+              Comment.new(file, src, line += 1)
             when /^\s*package/
-              Package
+              Package.new(file, src, line += 1)
             when /^\s*sub/
-              Sub
+              Sub.new(file, src, line += 1)
             else
-              Line
+              Line.new(file, src, line += 1)
             end
-
-            klass.new(file, src, line += 1)
           end
 
           reduce_stack
@@ -118,6 +123,8 @@ module YARD
               last = stack.last
 
               case element
+              when :private
+                stack.select { |e| e.is_a? Sub }.each { |e| e.visibility = :private }
               when Package
                 element.comments = last.read if last.is_a? Comment
               when Sub

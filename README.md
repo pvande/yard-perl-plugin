@@ -26,6 +26,9 @@ At present, this module will:
  * Parse documentation comments
    * Provided the comment block is contiguous
    * Provided the comment block has no whitespace separation from the documented code
+ * Handle subroutine visibility
+   * Subroutines declared before a 'use namespace::clean' are marked private
+   * Subroutines named with a leading '_' are marked protected
 
 This module *won't*:
 
