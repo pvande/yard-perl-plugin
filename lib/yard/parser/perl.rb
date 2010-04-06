@@ -25,7 +25,7 @@ module YARD
 
       class Comment < Line
         def read
-          @text.gsub(/^\s*# ?/, '')
+          @text.gsub(/^\s*#\s?/, '')
         end
       end
 
@@ -94,7 +94,11 @@ module YARD
           @stack = @stack.reduce([]) do |stack, element|
             if stack.empty?
               prepare_method(element) if element.is_a? Sub
-              stack << element
+            elsif @method
+              prepare_method(element)
+              warn element.class
+              stack.last.text << element.text
+              next stack
             else
               last = stack.last
 
@@ -102,20 +106,19 @@ module YARD
               when Package
                 element.comments = last.read if last.is_a? Comment
               when Sub
+                element.comments = last.read if last.is_a? Comment
                 prepare_method(element)
               when Comment
-                last.text << element.text if last.is_a? Comment
+                if last.is_a? Comment
+                  last.text << element.text
+                else
+                  stack << element
+                end
                 next stack
               end
-
-              if @method
-                prepare_method(element)
-                last.text << element.text
-                next stack
-              end
-
-              stack << element
             end
+
+            stack << element
           end
 
           warn 'Whoops! Misparsed something...' if @method
