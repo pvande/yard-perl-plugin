@@ -112,7 +112,6 @@ module YARD
               prepare_method(element) if element.is_a? Sub
             elsif @method
               prepare_method(element)
-              warn element.class
               stack.last.text << element.text
               next stack
             else
