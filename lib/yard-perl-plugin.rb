@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/yard/parser/perl'
 require File.dirname(__FILE__) + '/yard/handlers/perl/base'
 require File.dirname(__FILE__) + '/yard/handlers/perl/package_handler'
+require File.dirname(__FILE__) + '/yard/handlers/perl/sub_handler'
 
 
 # Monkeypatches for YARD 0.5.4

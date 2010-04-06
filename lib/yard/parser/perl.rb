@@ -49,7 +49,23 @@ module YARD
           @text[/package .*::(.*);/, 1]
         end
       end
-      class Sub < Line; end
+
+      class Sub < Line
+        attr_accessor :comments
+
+        def initialize(*args)
+          super *args
+          @comments = ''
+        end
+
+        def comments_range
+          (@line - @comments.split.length)...@line
+        end
+
+        def name
+          @text[/sub ([\w_]+)/, 1]
+        end
+      end
 
       class << self
         def parse(content, file='(string)')
@@ -82,7 +98,7 @@ module YARD
 
         def prepare_method(element)
           if @method
-            @method = false if element.text =~ /^#{@method}\}/
+            @method = false if element.text =~ /^#{@method}\}\s*$/
           else
             @method = $1 || '' unless element.text =~ /^(\s*)sub.*\}\s*$/
           end
