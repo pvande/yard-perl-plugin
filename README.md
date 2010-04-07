@@ -29,6 +29,8 @@ At present, this module will:
  * Handle subroutine visibility
    * Subroutines declared before a 'use namespace::clean' are marked private
    * Subroutines named with a leading '_' are marked protected
+ * Provide a POD output formatter
+   * Don't expect miracles yet, though.
 
 This module *won't*:
 

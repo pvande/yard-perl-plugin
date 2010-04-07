@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/yard/parser/perl'
 require File.dirname(__FILE__) + '/yard/handlers/perl/base'
 require File.dirname(__FILE__) + '/yard/handlers/perl/package_handler'
 require File.dirname(__FILE__) + '/yard/handlers/perl/sub_handler'
+require File.dirname(__FILE__) + '/yard/serializers/pod_serializer'
+
 
 
 # Monkeypatches for YARD 0.5.4
@@ -35,6 +37,12 @@ module YARD
         return Perl.parse(content, file) if parser_type == :perl
         parse_statements_without_perl(content)
       end
+    end
+  end
+
+  module Templates
+    module Engine
+      register_template_path File.join(File.dirname(__FILE__), '..', 'templates')
     end
   end
 end

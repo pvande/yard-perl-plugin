@@ -1,0 +1,16 @@
+<% unless @methods.empty? %>
+=head1 METHODS
+
+<% @methods.each do |method| %>
+B<<< <%= method.name %> >>>
+
+<% unless method.docstring.empty? %>
+=over 4
+
+<%= method.docstring + "\n" %>
+
+=back
+
+<% end %>
+<% end %>
+<% end %>
