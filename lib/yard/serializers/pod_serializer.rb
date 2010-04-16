@@ -29,8 +29,7 @@ module YARD
       #   object, otherwise the path on disk (without the basepath).
       def serialized_path(object)
         return object if object.is_a?(String)
-        file = object.files.first[0]
-        return file.sub(/#{File.extname(file)}$/, ".#{@extension}")
+        return File.join(object.path.split('::')) + ".#{@extension}"
       end
     end
   end
