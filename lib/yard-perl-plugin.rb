@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/yard/handlers/perl/base'
 require File.dirname(__FILE__) + '/yard/handlers/perl/package_handler'
 require File.dirname(__FILE__) + '/yard/handlers/perl/sub_handler'
 require File.dirname(__FILE__) + '/yard/serializers/pod_serializer'
+require File.dirname(__FILE__) + '/yard/formatters/pod_formatter'
+require File.dirname(__FILE__) + '/yard/templates/helpers/pod_helper'
 
 
 

@@ -1,4 +1,5 @@
-include Helpers::ModuleHelper
+include YARD::CodeObjects
+include Helpers::PODHelper
 
 def init
   options[:objects] = objects = run_verifier(options[:objects]).reject { |e| e.type == :root }
@@ -20,14 +21,26 @@ def init
 end
 
 def serialize(object)
+  case @object = object
+  when ModuleObject
+    serialize_module(object)
+  when ClassObject
+    serialize_class(object)
+  end
+end
+
+def serialize_module(object)
+end
+
+def serialize_class(object)
   Templates::Engine.with_serializer(object, options[:serializer]) do
     summary = object.docstring.summary
 
     @title = object.path + ' -- ' + summary
-    @docstring = object.docstring.sub(/#{summary}\n*/, '')
+    @docstring = format(object.docstring.sub(/#{summary}\n*/, ''))
     @object = object
     @methods = prune_method_listing(object.meths, false)
-    @see_also = [object.superclass, object.docstring.tags(:see) ].flatten.reject { |e| e.name == :Object }
+    @see_also = [object.superclass, *object.docstring.tags(:see) ].reject { |e| e.name == :Object }
 
     erb(:package)
   end
