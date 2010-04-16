@@ -25,7 +25,7 @@ module YARD
 
       class Comment < Line
         def read
-          @text.gsub(/^\s*#\s?/, '')
+          @text.gsub(/^\s*#[ \t]?/, '')
         end
       end
 
