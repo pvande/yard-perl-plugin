@@ -47,4 +47,8 @@ module YARD
       register_template_path File.join(File.dirname(__FILE__), '..', 'templates')
     end
   end
+
+  module Tags
+    Library.define_tag "Method Scope", :scope
+  end
 end
