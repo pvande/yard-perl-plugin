@@ -40,6 +40,43 @@ module YARD
         parse_statements_without_perl(content)
       end
     end
+
+    class Ruby::Legacy::TokenList
+      def parse_content(content)
+        lex = Ruby::Legacy::RubyLex.new(content)
+
+        # if Perl...
+
+        op = lex.instance_variable_get(:@OP)
+        head = op.instance_variable_get(:@head)
+        tree = head.instance_variable_get(:@Tree)
+
+        op.def_rule('\%') do |op, io|
+          t = lex.identify_identifier
+          t.set_text("\\%#{t.text}")
+        end
+
+        tree['%'].postproc = proc do |op, io|
+          if @lex_state == EXPR_BEG || @lex_state == EXPR_MID
+            lex.identify_quotation('%')
+          elsif lex.peek(0) == '='
+            lex.getc
+            Token(TkOPASGN, "%").set_text("%=")
+          elsif @lex_state == EXPR_ARG and @space_seen and lex.peek(0) !~ /\s/
+            lex.identify_quotation('%')
+          else
+            @lex_state = EXPR_BEG
+            Token("%").set_text("%")
+          end
+        end
+
+        # end
+
+        while tk = lex.token do
+          self << convert_token(lex, tk)
+        end
+      end
+    end
   end
 
   module Templates
