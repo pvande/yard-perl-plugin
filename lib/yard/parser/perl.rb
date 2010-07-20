@@ -42,11 +42,11 @@ module YARD
         end
 
         def namespace
-          @text[/package (.*)::.*;/, 1]
+          @text[/package (.*)::[^:]*;/, 1] || :root
         end
 
         def classname
-          @text[/package .*::(.*);/, 1]
+          @text[/package .*?([^:]*);/, 1]
         end
       end
 
