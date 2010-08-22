@@ -18,6 +18,8 @@ into fine, high-quality documentation.
 
 At present, this module will:
 
+ * Work with YARD 0.6 -- and likely beyond!
+   * Provided http://github.com/pvande/yard.git gets merged in
  * Parse a package declaration
    * Provided it's the first thing on a line
  * Parse a named sub declaration

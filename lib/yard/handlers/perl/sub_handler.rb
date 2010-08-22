@@ -4,6 +4,7 @@ class YARD::Handlers::Perl::SubHandler < YARD::Handlers::Perl::Base
   process do
     method = register MethodObject.new($__PACKAGE__ || :root, statement.name) do |m|
       m.source = statement.text
+      m.source_type = :perl
       m.visibility = statement.visibility
     end
 

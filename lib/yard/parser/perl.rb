@@ -3,12 +3,13 @@ module YARD
     module Perl
 
       class Line
-        attr_reader :file, :text, :line
+        attr_reader :file, :text, :line, :group
 
-        def initialize(file, text, line)
-          @file = file
-          @text = text
-          @line = line
+        def initialize(file, text, line, group)
+          @file  = file
+          @text  = text
+          @line  = line
+          @group = group
         end
 
         def ==(other)
@@ -72,21 +73,31 @@ module YARD
         end
       end
 
-      class << self
-        def parse(content, file='(string)')
-          line = 0
-          @stack = content.lines.collect do |src|
+      class PerlParser < YARD::Parser::Base
+        def initialize(source, filename)
+          @source = source
+          @filename = filename
+        end
+
+        def parse
+          group = nil
+          line  = 0
+          @stack = @source.lines.collect do |src|
             case src
             when /^\s*use namespace::clean;/
               :private
+            when /^# @group\s+(.+)\s*$/
+              group = $1
+            when /^# @endgroup\s*$/
+              group = nil
             when /^\s*#/
-              Comment.new(file, src, line += 1)
+              Comment.new(@filename, src, line += 1, group)
             when /^\s*package/
-              Package.new(file, src, line += 1)
+              Package.new(@filename, src, line += 1, group)
             when /^\s*sub/
-              Sub.new(file, src, line += 1)
+              Sub.new(@filename, src, line += 1, group)
             else
-              Line.new(file, src, line += 1)
+              Line.new(@filename, src, line += 1, group)
             end
           end
 
