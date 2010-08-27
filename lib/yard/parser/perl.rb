@@ -51,6 +51,18 @@ module YARD
         end
       end
 
+      class BaseClass < Line
+        def classname
+          @text[/'(.*)'\s*;/,           1] ||
+          @text[/"(.*)"\s*;/,           1] ||
+          @text[/q[qw]?\[(.*)\]\s*;/,   1] ||
+          @text[/q[qw]?\((.*)\)\s*;/,   1] ||
+          @text[/q[qw]?\{(.*)\}\s*;/,   1] ||
+          @text[/q[qw]?<(.*)>\s*;/,     1] ||
+          @text[/q[qw]?(.)(.*)\1'\s*;/, 2]
+        end
+      end
+
       class Sub < Line
         attr_accessor :comments
         attr_accessor :visibility
@@ -96,6 +108,8 @@ module YARD
               Package.new(@filename, src, line += 1, group)
             when /^\s*sub/
               Sub.new(@filename, src, line += 1, group)
+            when /^\s*(?:use\s+(?:bas(e|i[sc])|parent)|(?:our\s+)?@ISA\s*=|extends)/
+              BaseClass.new(@filename, src, line += 1, group)
             else
               Line.new(@filename, src, line += 1, group)
             end
