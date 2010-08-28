@@ -33,6 +33,8 @@ At present, this module will:
    * Subroutines named with a leading '_' are marked protected
  * Provide a POD output formatter
    * Don't expect miracles yet, though.
+ * Provide syntax highlighting for HTML output
+   * Support for this is provided by Textpow, via the TextMate Perl.plist
 
 This module *won't*:
 
