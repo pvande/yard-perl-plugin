@@ -12,6 +12,7 @@ class YARD::Handlers::Perl::PackageHandler < YARD::Handlers::Perl::Base
     
     statement.comments = docstring
     $__PACKAGE__ = register ClassObject.new(P(statement.namespace), statement.classname) do |c|
+      c.source_type = :perl
       def c.relative_path(obj)
         if self.namespace.path == obj.path
           return obj.path
