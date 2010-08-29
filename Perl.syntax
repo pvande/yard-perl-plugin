@@ -1,3209 +1,1121 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>comment</key>
-	<string>
-	TODO:	Include RegExp syntax
-</string>
-	<key>fileTypes</key>
-	<array>
-		<string>pl</string>
-		<string>pm</string>
-		<string>pod</string>
-		<string>t</string>
-		<string>PL</string>
-	</array>
-	<key>firstLineMatch</key>
-	<string>^#!.*\bperl\b</string>
-	<key>foldingStartMarker</key>
-	<string>(/\*|(\{|\[|\()\s*$)</string>
-	<key>foldingStopMarker</key>
-	<string>(\*/|^\s*(\}|\]|\)))</string>
-	<key>keyEquivalent</key>
-	<string>^~P</string>
-	<key>name</key>
-	<string>Perl</string>
-	<key>patterns</key>
-	<array>
-		<dict>
-			<key>include</key>
-			<string>#line_comment</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>^=</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.comment.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>^=cut</string>
-			<key>name</key>
-			<string>comment.block.documentation.perl</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#variable</string>
-		</dict>
-		<dict>
-			<key>applyEndPatternLast</key>
-			<integer>1</integer>
-			<key>begin</key>
-			<string>\b(?=qr\s*[^\s\w])</string>
-			<key>comment</key>
-			<string>string.regexp.compile.perl</string>
-			<key>end</key>
-			<string>((([egimosx]*)))(?=(\s+\S|\s*[;\,\#\{\}\)]|$))</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.regexp.compile.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.regexp-option.perl</string>
-				</dict>
-			</dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(qr)\s*\{</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\}</string>
-					<key>name</key>
-					<string>string.regexp.compile.nested_braces.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_braces_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(qr)\s*\[</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\]</string>
-					<key>name</key>
-					<string>string.regexp.compile.nested_brackets.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_brackets_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(qr)\s*&lt;</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>&gt;</string>
-					<key>name</key>
-					<string>string.regexp.compile.nested_ltgt.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_ltgt_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(qr)\s*\(</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\)</string>
-					<key>name</key>
-					<string>string.regexp.compile.nested_parens.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_parens_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(qr)\s*\'</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\'</string>
-					<key>name</key>
-					<string>string.regexp.compile.single-quote.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(qr)\s*([^\s\w\'\{\[\(\&lt;])</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\2</string>
-					<key>name</key>
-					<string>string.regexp.compile.simple-delimiter.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>comment</key>
-							<string>This is to prevent thinks like qr/foo$/ to treat $/ as a variable</string>
-							<key>match</key>
-							<string>\$(?=[^\s\w\'\{\[\(\&lt;])</string>
-							<key>name</key>
-							<string>keyword.control.anchor.perl</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_parens_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>applyEndPatternLast</key>
-			<integer>1</integer>
-			<key>begin</key>
-			<string>\b(?=(?&lt;!\&amp;)(s)(\s+\S|\s*[;\,\#\{\}\(\)\[&lt;]|$))</string>
-			<key>comment</key>
-			<string>string.regexp.replace.perl</string>
-			<key>end</key>
-			<string>((([egimosx]*)))(?=(\s+\S|\s*[;\,\#\{\}\)\]&gt;]|$))</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.regexp.replace.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.regexp-option.perl</string>
-				</dict>
-			</dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(s)\s*\{</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\}</string>
-					<key>name</key>
-					<string>string.regexp.nested_braces.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_braces</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(s)\s*\[</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\]</string>
-					<key>name</key>
-					<string>string.regexp.nested_brackets.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_brackets</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(s)\s*&lt;</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>&gt;</string>
-					<key>name</key>
-					<string>string.regexp.nested_ltgt.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_ltgt</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(s)\s*\(</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\)</string>
-					<key>name</key>
-					<string>string.regexp.nested_parens.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_parens</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>\{</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\}</string>
-					<key>name</key>
-					<string>string.regexp.format.nested_braces.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_braces_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>\[</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\]</string>
-					<key>name</key>
-					<string>string.regexp.format.nested_brackets.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_brackets_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>&lt;</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>&gt;</string>
-					<key>name</key>
-					<string>string.regexp.format.nested_ltgt.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_ltgt_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>\(</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\)</string>
-					<key>name</key>
-					<string>string.regexp.format.nested_parens.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested_parens_interpolated</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>'</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'</string>
-					<key>name</key>
-					<string>string.regexp.format.single_quote.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>match</key>
-							<string>\\['\\]</string>
-							<key>name</key>
-							<string>constant.character.escape.perl</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([^\s\w\[({&lt;;])</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\1</string>
-					<key>name</key>
-					<string>string.regexp.format.simple_delimiter.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\s+</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\b(?=s([^\s\w\[({&lt;]).*\1([egimos]*)([\}\)\;\,]|\s+))</string>
-			<key>comment</key>
-			<string>string.regexp.replaceXXX</string>
-			<key>end</key>
-			<string>((([egimos]*)))(?=([\}\)\;\,]|\s+|$))</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.regexp.replace.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.regexp-option.perl</string>
-				</dict>
-			</dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(s\s*)([^\s\w\[({&lt;])</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>(?=\2)</string>
-					<key>name</key>
-					<string>string.regexp.replaceXXX.simple_delimiter.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>'</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'</string>
-					<key>name</key>
-					<string>string.regexp.replaceXXX.format.single_quote.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>match</key>
-							<string>\\['\\]</string>
-							<key>name</key>
-							<string>constant.character.escape.perl.perl</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>([^\s\w\[({&lt;])</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\1</string>
-					<key>name</key>
-					<string>string.regexp.replaceXXX.format.simple_delimiter.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\b(?=(?&lt;!\\)s\s*([^\s\w\[({&lt;]))</string>
-			<key>comment</key>
-			<string>string.regexp.replace.extended</string>
-			<key>end</key>
-			<string>\2((([egimos]*x[egimos]*)))\b</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.regexp.replace.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.regexp-option.perl</string>
-				</dict>
-			</dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(s)\s*(.)</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>(?=\2)</string>
-					<key>name</key>
-					<string>string.regexp.replace.extended.simple_delimiter.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>'</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>'(?=[egimos]*x[egimos]*)\b</string>
-					<key>name</key>
-					<string>string.regexp.replace.extended.simple_delimiter.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(.)</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.string.perl</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\1(?=[egimos]*x[egimos]*)\b</string>
-					<key>name</key>
-					<string>string.regexp.replace.extended.simple_delimiter.perl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#escaped_char</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b\w+\s*(?==&gt;)</string>
-			<key>name</key>
-			<string>constant.other.key.perl</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>(?&lt;={)\s*\w+\s*(?=})</string>
-			<key>name</key>
-			<string>constant.other.bareword.perl</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>5</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>(?&lt;!\\)((~\s*)?\/)(\S.*?)(?&lt;!\\)(\\{2})*(\/)</string>
-			<key>name</key>
-			<string>string.regexp.find.perl</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(?&lt;!\\)(\~\s*\/)</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\/([cgimos]*x[cgimos]*)\b</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.regexp-option.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.regexp.find.extended.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.type.class.perl</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>comment.line.number-sign.perl</string>
-				</dict>
-				<key>4</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.comment.perl</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>^\s*(package)\s+(\S+)\s*((#).*)?$\n?</string>
-			<key>name</key>
-			<string>meta.class.perl</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>storage.type.sub.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.function.perl</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>storage.type.method.perl</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>^\s*(sub)\s+([-a-zA-Z0-9_]+)\s*(\(([\\\&amp;\%\$\@\*;]|\\\[[\&amp;\%\$\@\*]*\])*\))?</string>
-			<key>name</key>
-			<string>meta.function.perl</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.function.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.parameters.perl</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>variable.parameter.function.perl</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>^\s*(BEGIN|END|DESTROY)\b</string>
-			<key>name</key>
-			<string>meta.function.perl</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>^(?=(\t| {4}))</string>
-			<key>end</key>
-			<string>(?=[^\t\s])</string>
-			<key>name</key>
-			<string>meta.leading-tabs</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>meta.odd-tab</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>meta.even-tab</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\t| {4})(\t| {4})?</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>support.function.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>5</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>\b(m)\s*(?&lt;!\\)([^\[\{\(A-Za-z0-9\s])(.*?)(?&lt;!\\)(\\{2})*(\2)</string>
-			<key>name</key>
-			<string>string.regexp.find-m.perl</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\b(m)\s*(?&lt;!\\)\(</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\)</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.regexp.find-m-paren.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_parens_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\b(m)\s*(?&lt;!\\)\{</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\}</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.regexp.find-m-brace.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_braces_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\b(m)\s*(?&lt;!\\)\[</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\]</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.regexp.find-m-bracket.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_brackets_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\b(m)\s*(?&lt;!\\)\&lt;</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\&gt;</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.regexp.find-m-ltgt.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_ltgt_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>support.function.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>5</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>8</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>\b(s|tr|y)\s*([^A-Za-z0-9\s])(.*?)(?&lt;!\\)(\\{2})*(\2)(.*?)(?&lt;!\\)(\\{2})*(\2)</string>
-			<key>name</key>
-			<string>string.regexp.replace.perl</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(__FILE__|__LINE__|__PACKAGE__)\b</string>
-			<key>name</key>
-			<string>constant.language.perl</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>(?&lt;!-&gt;)\b(continue|die|do|else|elsif|exit|for|foreach|goto|if|last|next|redo|return|select|unless|until|wait|while|switch|case|package|require|use|eval)\b</string>
-			<key>name</key>
-			<string>keyword.control.perl</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(my|our|local)\b</string>
-			<key>name</key>
-			<string>storage.modifier.perl</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>(?&lt;!\w)\-[rwx0RWXOezsfdlpSbctugkTBMAC]\b</string>
-			<key>name</key>
-			<string>keyword.operator.filetest.perl</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(and|or|xor|as)\b</string>
-			<key>name</key>
-			<string>keyword.operator.logical.perl</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>(&lt;=&gt;| =&gt;|-&gt;)</string>
-			<key>name</key>
-			<string>keyword.operator.comparison.perl</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *"HTML").*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.doublequote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.html.embedded.perl</string>
-			<key>end</key>
-			<string>(^HTML$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>text.html.basic</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *"XML").*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.doublequote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.xml.embedded.perl</string>
-			<key>end</key>
-			<string>(^XML$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>text.xml</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *"CSS").*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.doublequote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.css.embedded.perl</string>
-			<key>end</key>
-			<string>(^CSS$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>source.css</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *"JAVASCRIPT").*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.doublequote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.js.embedded.perl</string>
-			<key>end</key>
-			<string>(^JAVASCRIPT$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>source.js</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *"SQL").*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.doublequote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>source.sql.embedded.perl</string>
-			<key>end</key>
-			<string>(^SQL$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>source.sql</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *"POSTSCRIPT").*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.doublequote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.postscript.embedded.perl</string>
-			<key>end</key>
-			<string>(^POSTSCRIPT$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>source.postscript</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *"([^"]*)").*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.doublequote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>string.unquoted.heredoc.doublequote.perl</string>
-			<key>end</key>
-			<string>(^\3$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *'HTML').*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.quote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.html.embedded.perl</string>
-			<key>end</key>
-			<string>(^HTML$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>text.html.basic</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *'XML').*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.quote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.xml.embedded.perl</string>
-			<key>end</key>
-			<string>(^XML$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>text.xml</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *'CSS').*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.quote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.css.embedded.perl</string>
-			<key>end</key>
-			<string>(^CSS$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>source.css</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *'JAVASCRIPT').*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.quote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.js.embedded.perl</string>
-			<key>end</key>
-			<string>(^JAVASCRIPT$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>source.js</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *'SQL').*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.quote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>source.sql.embedded.perl</string>
-			<key>end</key>
-			<string>(^SQL$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>source.sql</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *'POSTSCRIPT').*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.quote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>source.postscript.embedded.perl</string>
-			<key>end</key>
-			<string>(^POSTSCRIPT)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>source.postscript</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *'([^']*)').*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.quote.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>string.unquoted.heredoc.quote.perl</string>
-			<key>end</key>
-			<string>(^\3$)</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *`([^`]*)`).*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.backtick.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>string.unquoted.heredoc.backtick.perl</string>
-			<key>end</key>
-			<string>(^\3$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *HTML\b).*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.html.embedded.perl</string>
-			<key>end</key>
-			<string>(^HTML$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>text.html.basic</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *XML\b).*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>text.xml.embedded.perl</string>
-			<key>end</key>
-			<string>(^XML$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>text.xml</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *SQL\b).*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>source.sql.embedded.perl</string>
-			<key>end</key>
-			<string>(^SQL$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>source.sql</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *POSTSCRIPT\b).*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>source.postscript.embedded.perl</string>
-			<key>end</key>
-			<string>(^POSTSCRIPT)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>source.postscript</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>((&lt;&lt;) *((?![=\d\$ ])[^;,'"`\s)]*)).*\n?</string>
-			<key>captures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.perl</string>
-				</dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>string.unquoted.heredoc.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.heredoc.perl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>string.unquoted.heredoc.perl</string>
-			<key>end</key>
-			<string>(^\3$)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqq\s*([^\(\{\[\&lt;\w\s])</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\1</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.qq.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqx\s*([^'\(\{\[\&lt;\w\s])</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\1</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.interpolated.qx.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqx\s*'</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>'</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.interpolated.qx.single-quote.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>"</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>"</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.double.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqw?\s*([^\(\{\[\&lt;\w\s])</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\1</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.q.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>'</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>'</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.single.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>match</key>
-					<string>\\['\\]</string>
-					<key>name</key>
-					<string>constant.character.escape.perl</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>`</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>`</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.interpolated.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqq\s*\(</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\)</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.qq-paren.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_parens_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqq\s*\{</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\}</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.qq-brace.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_braces_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqq\s*\[</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\]</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.qq-bracket.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_brackets_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqq\s*\&lt;</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\&gt;</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.qq-ltgt.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_ltgt_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqx\s*\(</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\)</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.interpolated.qx-paren.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_parens_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqx\s*\{</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\}</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.interpolated.qx-brace.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_braces_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqx\s*\[</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\]</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.interpolated.qx-bracket.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_brackets_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqx\s*\&lt;</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\&gt;</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.interpolated.qx-ltgt.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_ltgt_interpolated</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqw?\s*\(</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\)</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.q-paren.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_parens</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqw?\s*\{</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\}</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.q-brace.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_braces</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqw?\s*\[</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\]</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.q-bracket.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_brackets</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\bqw?\s*\&lt;</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\&gt;</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.other.q-ltgt.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_ltgt</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>^__\w+__</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>$</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.perl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.unquoted.program-block.perl</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>\b(format)\s+([A-Za-z]+)\s*=</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>support.function.perl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.function.format.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>^\.\s*$</string>
-			<key>name</key>
-			<string>meta.format.perl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#line_comment</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(ARGV|DATA|ENV|SIG|STDERR|STDIN|STDOUT|atan2|bind|binmode|bless|caller|chdir|chmod|chomp|chop|chown|chr|chroot|close|closedir|cmp|connect|cos|crypt|dbmclose|dbmopen|defined|delete|dump|each|endgrent|endhostent|endnetent|endprotoent|endpwent|endservent|eof|eq|eval|exec|exists|exp|fcntl|fileno|flock|fork|format|formline|ge|getc|getgrent|getgrgid|getgrnam|gethostbyaddr|gethostbyname|gethostent|getlogin|getnetbyaddr|getnetbyname|getnetent|getpeername|getpgrp|getppid|getpriority|getprotobyname|getprotobynumber|getprotoent|getpwent|getpwnam|getpwuid|getservbyname|getservbyport|getservent|getsockname|getsockopt|glob|gmtime|grep|gt|hex|import|index|int|ioctl|join|keys|kill|lc|lcfirst|le|length|link|listen|local|localtime|log|lstat|lt|m|map|mkdir|msgctl|msgget|msgrcv|msgsnd|ne|no|oct|open|opendir|ord|pack|pipe|pop|pos|print|printf|push|q|qq|quotemeta|qw|qx|rand|read|readdir|readlink|recv|ref|rename|reset|reverse|rewinddir|rindex|rmdir|s|scalar|seek|seekdir|semctl|semget|semop|send|setgrent|sethostent|setnetent|setpgrp|setpriority|setprotoent|setpwent|setservent|setsockopt|shift|shmctl|shmget|shmread|shmwrite|shutdown|sin|sleep|socket|socketpair|sort|splice|split|sprintf|sqrt|srand|stat|study|substr|symlink|syscall|sysopen|sysread|system|syswrite|tell|telldir|tie|tied|time|times|tr|truncate|uc|ucfirst|umask|undef|unlink|unpack|unshift|untie|utime|values|vec|waitpid|wantarray|warn|write|y|q|qw|qq|qx)\b</string>
-			<key>name</key>
-			<string>support.function.perl</string>
-		</dict>
-	</array>
-	<key>repository</key>
-	<dict>
-		<key>escaped_char</key>
-		<dict>
-			<key>match</key>
-			<string>\\.</string>
-			<key>name</key>
-			<string>constant.character.escape.perl</string>
-		</dict>
-		<key>line_comment</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.perl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>^((#).*$\n?)</string>
-					<key>name</key>
-					<string>meta.comment.full-line.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(#).*$\n?</string>
-					<key>name</key>
-					<string>comment.line.number-sign.perl</string>
-				</dict>
-			</array>
-		</dict>
-		<key>nested_braces</key>
-		<dict>
-			<key>begin</key>
-			<string>\{</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.scope.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\}</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_braces</string>
-				</dict>
-			</array>
-		</dict>
-		<key>nested_braces_interpolated</key>
-		<dict>
-			<key>begin</key>
-			<string>\{</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.scope.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\}</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_braces_interpolated</string>
-				</dict>
-			</array>
-		</dict>
-		<key>nested_brackets</key>
-		<dict>
-			<key>begin</key>
-			<string>\[</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.scope.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\]</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_brackets</string>
-				</dict>
-			</array>
-		</dict>
-		<key>nested_brackets_interpolated</key>
-		<dict>
-			<key>begin</key>
-			<string>\[</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.scope.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\]</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_brackets_interpolated</string>
-				</dict>
-			</array>
-		</dict>
-		<key>nested_ltgt</key>
-		<dict>
-			<key>begin</key>
-			<string>&lt;</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.scope.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>&gt;</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#nested_ltgt</string>
-				</dict>
-			</array>
-		</dict>
-		<key>nested_ltgt_interpolated</key>
-		<dict>
-			<key>begin</key>
-			<string>&lt;</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.scope.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>&gt;</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_ltgt_interpolated</string>
-				</dict>
-			</array>
-		</dict>
-		<key>nested_parens</key>
-		<dict>
-			<key>begin</key>
-			<string>\(</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.scope.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_parens</string>
-				</dict>
-			</array>
-		</dict>
-		<key>nested_parens_interpolated</key>
-		<dict>
-			<key>begin</key>
-			<string>\(</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.scope.perl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\)</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>comment</key>
-					<string>This is to prevent thinks like qr/foo$/ to treat $/ as a variable</string>
-					<key>match</key>
-					<string>\$(?=[^\s\w\'\{\[\(\&lt;])</string>
-					<key>name</key>
-					<string>keyword.control.anchor.perl</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#variable</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#nested_parens_interpolated</string>
-				</dict>
-			</array>
-		</dict>
-		<key>variable</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$)&amp;(?![A-Za-z0-9_])</string>
-					<key>name</key>
-					<string>variable.other.regexp.match.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$)`(?![A-Za-z0-9_])</string>
-					<key>name</key>
-					<string>variable.other.regexp.pre-match.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$)'(?![A-Za-z0-9_])</string>
-					<key>name</key>
-					<string>variable.other.regexp.post-match.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$)\+(?![A-Za-z0-9_])</string>
-					<key>name</key>
-					<string>variable.other.regexp.last-paren-match.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$)"(?![A-Za-z0-9_])</string>
-					<key>name</key>
-					<string>variable.other.readwrite.list-separator.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$)0(?![A-Za-z0-9_])</string>
-					<key>name</key>
-					<string>variable.other.predefined.program-name.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$)[_ab\*\.\/\|,\\;#%=\-~^:?!\$&lt;&gt;\(\)\[\]@](?![A-Za-z0-9_])</string>
-					<key>name</key>
-					<string>variable.other.predefined.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$)[0-9]+(?![A-Za-z0-9_])</string>
-					<key>name</key>
-					<string>variable.other.subpattern.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>([\$\@\%](#)?)([a-zA-Zx7f-xff\$]|::)([a-zA-Z0-9_x7f-xff\$]|::)*\b</string>
-					<key>name</key>
-					<string>variable.other.readwrite.global.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(\$\{)(?:[a-zA-Zx7f-xff\$]|::)(?:[a-zA-Z0-9_x7f-xff\$]|::)*(\})</string>
-					<key>name</key>
-					<string>variable.other.readwrite.global.perl</string>
-				</dict>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.perl</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>([\$\@\%](#)?)[0-9_]\b</string>
-					<key>name</key>
-					<string>variable.other.readwrite.global.special.perl</string>
-				</dict>
-			</array>
-		</dict>
-	</dict>
-	<key>scopeName</key>
-	<string>source.perl</string>
-	<key>uuid</key>
-	<string>EDBFE125-6B1C-11D9-9189-000D93589AF6</string>
-</dict>
-</plist>
+--- 
+scopeName: source.perl
+name: Perl
+keyEquivalent: ^~P
+comment: |
+  
+  	TODO:	Include RegExp syntax
+
+repository: 
+  nested_ltgt: 
+    begin: <
+    captures: 
+      "1": 
+        name: punctuation.section.scope.perl
+    end: ">"
+    patterns: 
+    - include: "#nested_ltgt"
+  nested_brackets: 
+    begin: \[
+    captures: 
+      "1": 
+        name: punctuation.section.scope.perl
+    end: \]
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#nested_brackets"
+  line_comment: 
+    patterns: 
+    - name: meta.comment.full-line.perl
+      captures: 
+        "1": 
+          name: comment.line.number-sign.perl
+        "2": 
+          name: punctuation.definition.comment.perl
+      match: ^((#).*$\n?)
+    - name: comment.line.number-sign.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.comment.perl
+      match: (#).*$\n?
+  nested_parens_interpolated: 
+    begin: \(
+    captures: 
+      "1": 
+        name: punctuation.section.scope.perl
+    end: \)
+    patterns: 
+    - name: keyword.control.anchor.perl
+      comment: This is to prevent thinks like qr/foo$/ to treat $/ as a variable
+      match: \$(?=[^\s\w\'\{\[\(\<])
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_parens_interpolated"
+  nested_brackets_interpolated: 
+    begin: \[
+    captures: 
+      "1": 
+        name: punctuation.section.scope.perl
+    end: \]
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_brackets_interpolated"
+  nested_braces_interpolated: 
+    begin: \{
+    captures: 
+      "1": 
+        name: punctuation.section.scope.perl
+    end: \}
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_braces_interpolated"
+  nested_parens: 
+    begin: \(
+    captures: 
+      "1": 
+        name: punctuation.section.scope.perl
+    end: \)
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#nested_parens"
+  nested_ltgt_interpolated: 
+    begin: <
+    captures: 
+      "1": 
+        name: punctuation.section.scope.perl
+    end: ">"
+    patterns: 
+    - include: "#variable"
+    - include: "#nested_ltgt_interpolated"
+  escaped_char: 
+    name: constant.character.escape.perl
+    match: \\.
+  variable: 
+    patterns: 
+    - name: variable.other.regexp.match.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: (\$)&(?![A-Za-z0-9_])
+    - name: variable.other.regexp.pre-match.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: (\$)`(?![A-Za-z0-9_])
+    - name: variable.other.regexp.post-match.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: (\$)'(?![A-Za-z0-9_])
+    - name: variable.other.regexp.last-paren-match.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: (\$)\+(?![A-Za-z0-9_])
+    - name: variable.other.readwrite.list-separator.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: (\$)"(?![A-Za-z0-9_])
+    - name: variable.other.predefined.program-name.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: (\$)0(?![A-Za-z0-9_])
+    - name: variable.other.predefined.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: (\$)[_ab\*\.\/\|,\\;#%=\-~^:?!\$<>\(\)\[\]@](?![A-Za-z0-9_])
+    - name: variable.other.subpattern.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: (\$)[0-9]+(?![A-Za-z0-9_])
+    - name: variable.other.readwrite.global.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: ([\$\@\%](#)?)([a-zA-Zx7f-xff\$]|::)([a-zA-Z0-9_x7f-xff\$]|::)*\b
+    - name: variable.other.readwrite.global.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+        "2": 
+          name: punctuation.definition.variable.perl
+      match: (\$\{)(?:[a-zA-Zx7f-xff\$]|::)(?:[a-zA-Z0-9_x7f-xff\$]|::)*(\})
+    - name: variable.other.readwrite.global.special.perl
+      captures: 
+        "1": 
+          name: punctuation.definition.variable.perl
+      match: ([\$\@\%](#)?)[0-9_]\b
+  nested_braces: 
+    begin: \{
+    captures: 
+      "1": 
+        name: punctuation.section.scope.perl
+    end: \}
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#nested_braces"
+uuid: EDBFE125-6B1C-11D9-9189-000D93589AF6
+firstLineMatch: ^#!.*\bperl\b
+patterns: 
+- include: "#line_comment"
+- name: comment.block.documentation.perl
+  begin: ^=
+  captures: 
+    "0": 
+      name: punctuation.definition.comment.perl
+  end: ^=cut
+- include: "#variable"
+- comment: string.regexp.compile.perl
+  begin: \b(?=qr\s*[^\s\w])
+  endCaptures: 
+    "1": 
+      name: string.regexp.compile.perl
+    "2": 
+      name: punctuation.definition.string.perl
+    "3": 
+      name: keyword.control.regexp-option.perl
+  applyEndPatternLast: 1
+  end: ((([egimosx]*)))(?=(\s+\S|\s*[;\,\#\{\}\)]|$))
+  patterns: 
+  - name: string.regexp.compile.nested_braces.perl
+    begin: (qr)\s*\{
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: \}
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_braces_interpolated"
+  - name: string.regexp.compile.nested_brackets.perl
+    begin: (qr)\s*\[
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: \]
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_brackets_interpolated"
+  - name: string.regexp.compile.nested_ltgt.perl
+    begin: (qr)\s*<
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: ">"
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_ltgt_interpolated"
+  - name: string.regexp.compile.nested_parens.perl
+    begin: (qr)\s*\(
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: \)
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_parens_interpolated"
+  - name: string.regexp.compile.single-quote.perl
+    begin: (qr)\s*\'
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: \'
+    patterns: 
+    - include: "#escaped_char"
+  - name: string.regexp.compile.simple-delimiter.perl
+    begin: (qr)\s*([^\s\w\'\{\[\(\<])
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: \2
+    patterns: 
+    - name: keyword.control.anchor.perl
+      comment: This is to prevent thinks like qr/foo$/ to treat $/ as a variable
+      match: \$(?=[^\s\w\'\{\[\(\<])
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_parens_interpolated"
+- comment: string.regexp.replace.perl
+  begin: \b(?=(?<!\&)(s)(\s+\S|\s*[;\,\#\{\}\(\)\[<]|$))
+  endCaptures: 
+    "1": 
+      name: string.regexp.replace.perl
+    "2": 
+      name: punctuation.definition.string.perl
+    "3": 
+      name: keyword.control.regexp-option.perl
+  applyEndPatternLast: 1
+  end: ((([egimosx]*)))(?=(\s+\S|\s*[;\,\#\{\}\)\]>]|$))
+  patterns: 
+  - name: string.regexp.nested_braces.perl
+    begin: (s)\s*\{
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: \}
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#nested_braces"
+  - name: string.regexp.nested_brackets.perl
+    begin: (s)\s*\[
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: \]
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#nested_brackets"
+  - name: string.regexp.nested_ltgt.perl
+    begin: (s)\s*<
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: ">"
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#nested_ltgt"
+  - name: string.regexp.nested_parens.perl
+    begin: (s)\s*\(
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: \)
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#nested_parens"
+  - name: string.regexp.format.nested_braces.perl
+    begin: \{
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: \}
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_braces_interpolated"
+  - name: string.regexp.format.nested_brackets.perl
+    begin: \[
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: \]
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_brackets_interpolated"
+  - name: string.regexp.format.nested_ltgt.perl
+    begin: <
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: ">"
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_ltgt_interpolated"
+  - name: string.regexp.format.nested_parens.perl
+    begin: \(
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: \)
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+    - include: "#nested_parens_interpolated"
+  - name: string.regexp.format.single_quote.perl
+    begin: "'"
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: "'"
+    patterns: 
+    - name: constant.character.escape.perl
+      match: \\['\\]
+  - name: string.regexp.format.simple_delimiter.perl
+    begin: ([^\s\w\[({<;])
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: \1
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+  - match: \s+
+- comment: string.regexp.replaceXXX
+  begin: \b(?=s([^\s\w\[({<]).*\1([egimos]*)([\}\)\;\,]|\s+))
+  endCaptures: 
+    "1": 
+      name: string.regexp.replace.perl
+    "2": 
+      name: punctuation.definition.string.perl
+    "3": 
+      name: keyword.control.regexp-option.perl
+  end: ((([egimos]*)))(?=([\}\)\;\,]|\s+|$))
+  patterns: 
+  - name: string.regexp.replaceXXX.simple_delimiter.perl
+    begin: (s\s*)([^\s\w\[({<])
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: (?=\2)
+    patterns: 
+    - include: "#escaped_char"
+  - name: string.regexp.replaceXXX.format.single_quote.perl
+    begin: "'"
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: "'"
+    patterns: 
+    - name: constant.character.escape.perl.perl
+      match: \\['\\]
+  - name: string.regexp.replaceXXX.format.simple_delimiter.perl
+    begin: ([^\s\w\[({<])
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: \1
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+- comment: string.regexp.replace.extended
+  begin: \b(?=(?<!\\)s\s*([^\s\w\[({<]))
+  endCaptures: 
+    "1": 
+      name: string.regexp.replace.perl
+    "2": 
+      name: punctuation.definition.string.perl
+    "3": 
+      name: keyword.control.regexp-option.perl
+  end: \2((([egimos]*x[egimos]*)))\b
+  patterns: 
+  - name: string.regexp.replace.extended.simple_delimiter.perl
+    begin: (s)\s*(.)
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+      "1": 
+        name: support.function.perl
+    end: (?=\2)
+    patterns: 
+    - include: "#escaped_char"
+  - name: string.regexp.replace.extended.simple_delimiter.perl
+    begin: "'"
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: "'(?=[egimos]*x[egimos]*)\\b"
+    patterns: 
+    - include: "#escaped_char"
+  - name: string.regexp.replace.extended.simple_delimiter.perl
+    begin: (.)
+    captures: 
+      "0": 
+        name: punctuation.definition.string.perl
+    end: \1(?=[egimos]*x[egimos]*)\b
+    patterns: 
+    - include: "#escaped_char"
+    - include: "#variable"
+- name: constant.other.key.perl
+  match: \b\w+\s*(?==>)
+- name: constant.other.bareword.perl
+  match: (?<={)\s*\w+\s*(?=})
+- name: string.regexp.find.perl
+  captures: 
+    "1": 
+      name: punctuation.definition.string.perl
+    "5": 
+      name: punctuation.definition.string.perl
+  match: (?<!\\)((~\s*)?\/)(\S.*?)(?<!\\)(\\{2})*(\/)
+- name: string.regexp.find.extended.perl
+  begin: (?<!\\)(\~\s*\/)
+  endCaptures: 
+    "1": 
+      name: keyword.control.regexp-option.perl
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+  end: \/([cgimos]*x[cgimos]*)\b
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+- name: meta.class.perl
+  captures: 
+    "1": 
+      name: keyword.control.perl
+    "2": 
+      name: entity.name.type.class.perl
+    "3": 
+      name: comment.line.number-sign.perl
+    "4": 
+      name: punctuation.definition.comment.perl
+  match: ^\s*(package)\s+(\S+)\s*((#).*)?$\n?
+- name: meta.function.perl
+  captures: 
+    "1": 
+      name: storage.type.sub.perl
+    "2": 
+      name: entity.name.function.perl
+    "3": 
+      name: storage.type.method.perl
+  match: ^\s*(sub)\s+([-a-zA-Z0-9_]+)\s*(\(([\\\&\%\$\@\*;]|\\\[[\&\%\$\@\*]*\])*\))?
+- name: meta.function.perl
+  captures: 
+    "1": 
+      name: entity.name.function.perl
+    "2": 
+      name: punctuation.definition.parameters.perl
+    "3": 
+      name: variable.parameter.function.perl
+  match: ^\s*(BEGIN|END|DESTROY)\b
+- name: meta.leading-tabs
+  begin: ^(?=(\t| {4}))
+  end: (?=[^\t\s])
+  patterns: 
+  - captures: 
+      "1": 
+        name: meta.odd-tab
+      "2": 
+        name: meta.even-tab
+    match: (\t| {4})(\t| {4})?
+- name: string.regexp.find-m.perl
+  captures: 
+    "1": 
+      name: support.function.perl
+    "2": 
+      name: punctuation.definition.string.perl
+    "5": 
+      name: punctuation.definition.string.perl
+  match: \b(m)\s*(?<!\\)([^\[\{\(A-Za-z0-9\s])(.*?)(?<!\\)(\\{2})*(\2)
+- name: string.regexp.find-m-paren.perl
+  begin: \b(m)\s*(?<!\\)\(
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \)
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_parens_interpolated"
+  - include: "#variable"
+- name: string.regexp.find-m-brace.perl
+  begin: \b(m)\s*(?<!\\)\{
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \}
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_braces_interpolated"
+  - include: "#variable"
+- name: string.regexp.find-m-bracket.perl
+  begin: \b(m)\s*(?<!\\)\[
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \]
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_brackets_interpolated"
+  - include: "#variable"
+- name: string.regexp.find-m-ltgt.perl
+  begin: \b(m)\s*(?<!\\)\<
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \>
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_ltgt_interpolated"
+  - include: "#variable"
+- name: string.regexp.replace.perl
+  captures: 
+    "8": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: support.function.perl
+    "2": 
+      name: punctuation.definition.string.perl
+    "5": 
+      name: punctuation.definition.string.perl
+  match: \b(s|tr|y)\s*([^A-Za-z0-9\s])(.*?)(?<!\\)(\\{2})*(\2)(.*?)(?<!\\)(\\{2})*(\2)
+- name: constant.language.perl
+  match: \b(__FILE__|__LINE__|__PACKAGE__)\b
+- name: keyword.control.perl
+  match: (?<!->)\b(continue|die|do|else|elsif|exit|for|foreach|goto|if|last|next|redo|return|select|unless|until|wait|while|switch|case|package|require|use|eval)\b
+- name: storage.modifier.perl
+  match: \b(my|our|local)\b
+- name: keyword.operator.filetest.perl
+  match: (?<!\w)\-[rwx0RWXOezsfdlpSbctugkTBMAC]\b
+- name: keyword.operator.logical.perl
+  match: \b(and|or|xor|as)\b
+- name: keyword.operator.comparison.perl
+  match: (<=>| =>|->)
+- begin: ((<<) *"HTML").*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.doublequote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^HTML$)
+  contentName: text.html.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: text.html.basic
+- begin: ((<<) *"XML").*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.doublequote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^XML$)
+  contentName: text.xml.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: text.xml
+- begin: ((<<) *"CSS").*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.doublequote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^CSS$)
+  contentName: text.css.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: source.css
+- begin: ((<<) *"JAVASCRIPT").*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.doublequote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^JAVASCRIPT$)
+  contentName: text.js.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: source.js
+- begin: ((<<) *"SQL").*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.doublequote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^SQL$)
+  contentName: source.sql.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: source.sql
+- begin: ((<<) *"POSTSCRIPT").*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.doublequote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^POSTSCRIPT$)
+  contentName: text.postscript.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: source.postscript
+- begin: ((<<) *"([^"]*)").*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.doublequote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^\3$)
+  contentName: string.unquoted.heredoc.doublequote.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+- begin: ((<<) *'HTML').*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.quote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^HTML$)
+  contentName: text.html.embedded.perl
+  patterns: 
+  - include: text.html.basic
+- begin: ((<<) *'XML').*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.quote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^XML$)
+  contentName: text.xml.embedded.perl
+  patterns: 
+  - include: text.xml
+- begin: ((<<) *'CSS').*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.quote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^CSS$)
+  contentName: text.css.embedded.perl
+  patterns: 
+  - include: source.css
+- begin: ((<<) *'JAVASCRIPT').*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.quote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^JAVASCRIPT$)
+  contentName: text.js.embedded.perl
+  patterns: 
+  - include: source.js
+- begin: ((<<) *'SQL').*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.quote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^SQL$)
+  contentName: source.sql.embedded.perl
+  patterns: 
+  - include: source.sql
+- begin: ((<<) *'POSTSCRIPT').*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.quote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^POSTSCRIPT)
+  contentName: source.postscript.embedded.perl
+  patterns: 
+  - include: source.postscript
+- begin: ((<<) *'([^']*)').*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.quote.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^\3$)
+  contentName: string.unquoted.heredoc.quote.perl
+- begin: ((<<) *`([^`]*)`).*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.backtick.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^\3$)
+  contentName: string.unquoted.heredoc.backtick.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+- begin: ((<<) *HTML\b).*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^HTML$)
+  contentName: text.html.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: text.html.basic
+- begin: ((<<) *XML\b).*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^XML$)
+  contentName: text.xml.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: text.xml
+- begin: ((<<) *SQL\b).*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^SQL$)
+  contentName: source.sql.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: source.sql
+- begin: ((<<) *POSTSCRIPT\b).*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^POSTSCRIPT)
+  contentName: source.postscript.embedded.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+  - include: source.postscript
+- begin: ((<<) *((?![=\d\$ ])[^;,'"`\s)]*)).*\n?
+  captures: 
+    "0": 
+      name: punctuation.definition.string.perl
+    "1": 
+      name: string.unquoted.heredoc.perl
+    "2": 
+      name: punctuation.definition.heredoc.perl
+  end: (^\3$)
+  contentName: string.unquoted.heredoc.perl
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+- name: string.quoted.other.qq.perl
+  begin: \bqq\s*([^\(\{\[\<\w\s])
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \1
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+- name: string.interpolated.qx.perl
+  begin: \bqx\s*([^'\(\{\[\<\w\s])
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \1
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+- name: string.interpolated.qx.single-quote.perl
+  begin: \bqx\s*'
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: "'"
+  patterns: 
+  - include: "#escaped_char"
+- name: string.quoted.double.perl
+  begin: "\""
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: "\""
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+- name: string.quoted.other.q.perl
+  begin: \bqw?\s*([^\(\{\[\<\w\s])
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \1
+  patterns: 
+  - include: "#escaped_char"
+- name: string.quoted.single.perl
+  begin: "'"
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: "'"
+  patterns: 
+  - name: constant.character.escape.perl
+    match: \\['\\]
+- name: string.interpolated.perl
+  begin: `
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: `
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#variable"
+- name: string.quoted.other.qq-paren.perl
+  begin: \bqq\s*\(
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \)
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_parens_interpolated"
+  - include: "#variable"
+- name: string.quoted.other.qq-brace.perl
+  begin: \bqq\s*\{
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \}
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_braces_interpolated"
+  - include: "#variable"
+- name: string.quoted.other.qq-bracket.perl
+  begin: \bqq\s*\[
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \]
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_brackets_interpolated"
+  - include: "#variable"
+- name: string.quoted.other.qq-ltgt.perl
+  begin: \bqq\s*\<
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \>
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_ltgt_interpolated"
+  - include: "#variable"
+- name: string.interpolated.qx-paren.perl
+  begin: \bqx\s*\(
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \)
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_parens_interpolated"
+  - include: "#variable"
+- name: string.interpolated.qx-brace.perl
+  begin: \bqx\s*\{
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \}
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_braces_interpolated"
+  - include: "#variable"
+- name: string.interpolated.qx-bracket.perl
+  begin: \bqx\s*\[
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \]
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_brackets_interpolated"
+  - include: "#variable"
+- name: string.interpolated.qx-ltgt.perl
+  begin: \bqx\s*\<
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \>
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_ltgt_interpolated"
+  - include: "#variable"
+- name: string.quoted.other.q-paren.perl
+  begin: \bqw?\s*\(
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \)
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_parens"
+- name: string.quoted.other.q-brace.perl
+  begin: \bqw?\s*\{
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \}
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_braces"
+- name: string.quoted.other.q-bracket.perl
+  begin: \bqw?\s*\[
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \]
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_brackets"
+- name: string.quoted.other.q-ltgt.perl
+  begin: \bqw?\s*\<
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: \>
+  patterns: 
+  - include: "#escaped_char"
+  - include: "#nested_ltgt"
+- name: string.unquoted.program-block.perl
+  begin: ^__\w+__
+  endCaptures: 
+    "0": 
+      name: punctuation.definition.string.end.perl
+  beginCaptures: 
+    "0": 
+      name: punctuation.definition.string.begin.perl
+  end: $
+- name: meta.format.perl
+  begin: \b(format)\s+([A-Za-z]+)\s*=
+  beginCaptures: 
+    "1": 
+      name: support.function.perl
+    "2": 
+      name: entity.name.function.format.perl
+  end: ^\.\s*$
+  patterns: 
+  - include: "#line_comment"
+  - include: "#variable"
+- name: support.function.perl
+  match: \b(ARGV|DATA|ENV|SIG|STDERR|STDIN|STDOUT|atan2|bind|binmode|bless|caller|chdir|chmod|chomp|chop|chown|chr|chroot|close|closedir|cmp|connect|cos|crypt|dbmclose|dbmopen|defined|delete|dump|each|endgrent|endhostent|endnetent|endprotoent|endpwent|endservent|eof|eq|eval|exec|exists|exp|fcntl|fileno|flock|fork|format|formline|ge|getc|getgrent|getgrgid|getgrnam|gethostbyaddr|gethostbyname|gethostent|getlogin|getnetbyaddr|getnetbyname|getnetent|getpeername|getpgrp|getppid|getpriority|getprotobyname|getprotobynumber|getprotoent|getpwent|getpwnam|getpwuid|getservbyname|getservbyport|getservent|getsockname|getsockopt|glob|gmtime|grep|gt|hex|import|index|int|ioctl|join|keys|kill|lc|lcfirst|le|length|link|listen|local|localtime|log|lstat|lt|m|map|mkdir|msgctl|msgget|msgrcv|msgsnd|ne|no|oct|open|opendir|ord|pack|pipe|pop|pos|print|printf|push|q|qq|quotemeta|qw|qx|rand|read|readdir|readlink|recv|ref|rename|reset|reverse|rewinddir|rindex|rmdir|s|scalar|seek|seekdir|semctl|semget|semop|send|setgrent|sethostent|setnetent|setpgrp|setpriority|setprotoent|setpwent|setservent|setsockopt|shift|shmctl|shmget|shmread|shmwrite|shutdown|sin|sleep|socket|socketpair|sort|splice|split|sprintf|sqrt|srand|stat|study|substr|symlink|syscall|sysopen|sysread|system|syswrite|tell|telldir|tie|tied|time|times|tr|truncate|uc|ucfirst|umask|undef|unlink|unpack|unshift|untie|utime|values|vec|waitpid|wantarray|warn|write|y|q|qw|qq|qx)\b
+foldingStartMarker: (/\*|(\{|\[|\()\s*$)
+foldingStopMarker: (\*/|^\s*(\}|\]|\)))
+fileTypes: 
+- pl
+- pm
+- pod
+- t
+- PL
