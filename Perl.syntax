@@ -472,7 +472,7 @@ patterns:
   - include: "#escaped_char"
   - include: "#variable"
 - name: meta.class.perl
-  captures: 
+  beginCaptures:
     "1": 
       name: keyword.control.perl
     "2": 
@@ -481,8 +481,11 @@ patterns:
       name: comment.line.number-sign.perl
     "4": 
       name: punctuation.definition.comment.perl
-  match: ^\s*(package)\s+(\S+)\s*((#).*)?$\n?
-- name: meta.function.perl
+  begin: '^\s*(package)\s+(\S+)\s*((#).*)?$\n?'
+  end: (?:(__END__|1);|(?=package))
+  patterns:
+    - include: $self
+- name: meta.function.predeclared.perl
   captures: 
     "1": 
       name: storage.type.sub.perl
@@ -490,7 +493,21 @@ patterns:
       name: entity.name.function.perl
     "3": 
       name: storage.type.method.perl
-  match: ^\s*(sub)\s+([-a-zA-Z0-9_]+)\s*(\(([\\\&\%\$\@\*;]|\\\[[\&\%\$\@\*]*\])*\))?
+  match: ^\s*(sub)\s+([-a-zA-Z0-9_]+)\s*(\(([\\\&\%\$\@\*;]|\\\[[\&\%\$\@\*]*\])*\))?\s*;
+- name: meta.function.perl
+  contentName: meta.function.body.perl
+  beginCaptures:
+    "1":
+      name: storage.type.sub.perl
+    "2":
+      name: entity.name.function.perl
+    "3":
+      name: storage.type.method.perl
+  begin: ^\s*(sub)\s+([-a-zA-Z0-9_]+)\s*(\(([\\\&\%\$\@\*;]|\\\[[\&\%\$\@\*]*\])*\))?\s*\{?
+  end: \}
+  patterns:
+    - include: $self
+    - include: '#nested_braces'
 - name: meta.function.perl
   captures: 
     "1": 
