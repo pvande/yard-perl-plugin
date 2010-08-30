@@ -153,6 +153,7 @@ repository:
       match: ([\$\@\%](#)?)[0-9_]\b
   nested_braces: 
     begin: \{
+    name: meta.scope.perl
     captures: 
       "1": 
         name: punctuation.section.scope.perl
@@ -160,9 +161,11 @@ repository:
     patterns: 
     - include: "#escaped_char"
     - include: "#nested_braces"
+    - include: $self
 uuid: EDBFE125-6B1C-11D9-9189-000D93589AF6
 firstLineMatch: ^#!.*\bperl\b
-patterns: 
+patterns:
+- include: "#nested_braces"
 - include: "#line_comment"
 - name: comment.block.documentation.perl
   begin: ^=
@@ -477,12 +480,7 @@ patterns:
       name: keyword.control.perl
     "2": 
       name: entity.name.type.class.perl
-    "3": 
-      name: comment.line.number-sign.perl
-    "4": 
-      name: punctuation.definition.comment.perl
-  begin: '^\s*(package)\s+(\S+)\s*((#).*)?$\n?'
-  end: (?:(__END__|1);|(?=package))
+  begin: '(?<=\W|^)\s*(package)\s+(\S+)\s*;'
   patterns:
     - include: $self
 - name: meta.function.predeclared.perl
@@ -493,9 +491,9 @@ patterns:
       name: entity.name.function.perl
     "3": 
       name: storage.type.method.perl
-  match: ^\s*(sub)\s+([-a-zA-Z0-9_]+)\s*(\(([\\\&\%\$\@\*;]|\\\[[\&\%\$\@\*]*\])*\))?\s*;
+  match: \s*(sub)\s+([-a-zA-Z0-9_]+)\s*(\(([\\\&\%\$\@\*;]|\\\[[\&\%\$\@\*]*\])*\))?\s*;
 - name: meta.function.perl
-  contentName: meta.function.body.perl
+  contentName: meta.scope.function.perl
   beginCaptures:
     "1":
       name: storage.type.sub.perl
@@ -503,7 +501,7 @@ patterns:
       name: entity.name.function.perl
     "3":
       name: storage.type.method.perl
-  begin: ^\s*(sub)\s+([-a-zA-Z0-9_]+)\s*(\(([\\\&\%\$\@\*;]|\\\[[\&\%\$\@\*]*\])*\))?\s*\{?
+  begin: \s*(sub)\s+([-a-zA-Z0-9_]+)?\s*(\(([\\\&\%\$\@\*;]|\\\[[\&\%\$\@\*]*\])*\))?\s*\{?
   end: \}
   patterns:
     - include: $self
