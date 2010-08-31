@@ -3,54 +3,24 @@ class YARD::Handlers::Perl::SubHandler < YARD::Handlers::Perl::Base
 
   process do
     method = register MethodObject.new($__PACKAGE__ || :root, statement.name) do |m|
-      m.source = statement.text
+      m.source = statement.content
       m.source_type = :perl
       m.visibility = statement.visibility
-    end
+      m.parameters = statement.parameters
 
-    add_parameters(method.source, method)
+      m.scope = case statement.parameters.first
+        when /self|instance/                   then :instance
+        when /class|package/                   then :class
+        when /receiver|invocant|class_or_self/ then :dual
+        else                                        :instance  # Not really...
+      end unless statement.parameters.empty?
 
-    if method.has_tag?(:scope)
-      case (scope = method.tag(:scope).text.downcase)
-      when 'class', 'instance'
-        method.scope = scope
-      when 'dual'
-        class_method = method.dup
-        class_method.scope = :class
-        register class_method
-      else
-        log.warn "Unrecognized @scope '#{scope}' for method #{statement.name}"
+      m.scope = m.tag(:scope).text.downcase.to_sym if m.has_tag?(:scope)
+
+      if m.scope == :dual
+        m.scope = :instance
+        register m.dup.tap { |m| m.scope = :class }
       end
     end
-  end
-
-  def add_parameters(code, method)
-    params = []
-    if code =~ /my\s+\((.*?)\)\s*=\s*@_\s*;/
-      params = $1.split(/\s*(?:,|=>)\s*/)
-
-      parse_method_scope(params.first, method)
-
-      method.parameters = params.map { |p| [ p ] }
-    end
-  end
-
-  private
-
-  def parse_method_scope(parameter, method)
-    return if method.has_tag?(:scope)
-
-    scope = case (parameter)
-    when '$self', '$instance'
-      'instance'
-    when '$class', '$package'
-      'class'
-    when '$receiver', '$invocant', '$class_or_self'
-      'dual'
-    else
-      return
-    end
-
-    method.docstring.add_tag(YARD::Tags::Tag.new(:scope, scope))
   end
 end

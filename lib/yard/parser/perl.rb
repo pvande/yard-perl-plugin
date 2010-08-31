@@ -1,87 +1,69 @@
 module YARD
   module Parser
     module Perl
+      class Code
+        attr_accessor :content, :line, :filename, :group
 
-      class Line
-        attr_reader :file, :text, :line, :group
+        def initialize(args)
+          @content  = args[:content]
+          @line     = args[:lnum]
+          @filename = args[:filename]
 
-        def initialize(file, text, line, group)
-          @file  = file
-          @text  = text
-          @line  = line
-          @group = group
-        end
-
-        def ==(other)
-          self.class == other.class &&
-          @file == other.file &&
-          @text == other.text &&
-          @line == other.line
-        end
-
-        def show
-          "\t#{@text}: #{@text.split[0]}"
-        end
-      end
-
-      class Comment < Line
-        def read
-          @text.gsub(/^\s*#[ \t]?/, '')
-        end
-      end
-
-      class Package < Line
-        attr_accessor :comments
-
-        def initialize(*args)
-          super *args
           @comments = ''
+          @name     = ''
         end
 
         def comments_range
           (@line - @comments.split.length)...@line
         end
+
+        def inspect
+          "<#{self.class} #{@name} #{@filename}:#{@line}>"
+        end
+      end
+
+      class Comment < Code
+        def to_s
+          str = @content.gsub(/^\s*#/, '')
+          str.gsub!(/^ /, '') while str.all? { |line| line =~ /^ |^$/ }
+          str
+        end
+      end
+
+      class Package < Code
+        attr_accessor :comments, :name, :superclass
 
         def namespace
-          @text[/package (.*)::[^:]*;/, 1] || :root
+          "::#{@name}".split("::")[0...-1].join("::")
         end
 
         def classname
-          @text[/package .*?([^:]*);/, 1]
+          "::#{@name}".split("::")[-1]
         end
       end
 
-      class BaseClass < Line
-        def classname
-          @text[/'(.*)'\s*;/,           1] ||
-          @text[/"(.*)"\s*;/,           1] ||
-          @text[/q[qw]?\[(.*)\]\s*;/,   1] ||
-          @text[/q[qw]?\((.*)\)\s*;/,   1] ||
-          @text[/q[qw]?\{(.*)\}\s*;/,   1] ||
-          @text[/q[qw]?<(.*)>\s*;/,     1] ||
-          @text[/q[qw]?(.)(.*)\1'\s*;/, 2]
-        end
-      end
-
-      class Sub < Line
-        attr_accessor :comments
-        attr_accessor :visibility
-
-        def initialize(*args)
-          super *args
-          @comments = ''
-        end
+      class Sub < Code
+        attr_accessor :comments, :name, :body
+        attr_writer   :visibility
 
         def visibility
-          @visibility ||= name.start_with?('_') ? :protected : :public
+          @visibility ||= @name.start_with?('_') ? :protected : :public
         end
 
-        def comments_range
-          (@line - @comments.split.length)...@line
-        end
+        def parameters
+          return @parameters if @parameters
 
-        def name
-          @text[/sub ([\w_]+)/, 1]
+          @parameters = [].tap do |params|
+            @body.strip.take_while do |line|
+              if line.strip    =~ /my\s+\((.*?)\)\s*=\s*@_\s*;/
+                params.push *$1.split(/\s*(?:,|=>)\s*/)
+              elsif line.strip =~ /my\s+(.*?)\s*=\s*shift(\(@_\))?\s*;/
+                params << $1
+              else
+                false
+              end
+            end
+          end
         end
       end
 
@@ -92,83 +74,148 @@ module YARD
         end
 
         def parse
-          group = nil
-          line  = 0
-          @stack = @source.lines.collect do |src|
-            case src
-            when /^\s*use namespace::clean;/
-              :private
-            when /^# @group\s+(.+)\s*$/
-              group = $1
-            when /^# @endgroup\s*$/
-              group = nil
-            when /^\s*#/
-              Comment.new(@filename, src, line += 1, group)
-            when /^\s*package/
-              Package.new(@filename, src, line += 1, group)
-            when /^\s*sub/
-              Sub.new(@filename, src, line += 1, group)
-            when /^\s*(?:use\s+(?:bas(e|i[sc])|parent)|(?:our\s+)?@ISA\s*=|extends)/
-              BaseClass.new(@filename, src, line += 1, group)
-            else
-              Line.new(@filename, src, line += 1, group)
+          PerlSyntax.parse(@source, @processor = Processor.new(@filename))
+
+          group   = nil
+          watches = {
+            # Watch for contiguous comment blocks
+            'meta.comment.block' => proc { |s, e| s << Comment.new(e) },
+
+            # Watch for 'package' declarations
+            'meta.class' => proc do |s, e|
+              pkg = Package.new(e)
+              pkg.comments = s.pop.to_s if s.last.is_a? Comment
+              index = s.length
+
+              # Watch for the package name
+              watches['entity.name.type.class'] = proc do |_, e|
+                pkg.name = e[:content]
+                watches.delete('entity.name.type.class')
+              end
+
+              # Watch the upcoming 'use' statements
+              watches['meta.import.package'] = proc do |_, e|
+                case e[:content]
+                when /^bas(e|i[sc])|parent$/
+                  # First argument will be the superclass name
+                  watches['meta.import.arguments'] = proc do |_, e|
+                    pkg.superclass = e[:content][/(\w|:)+/]
+                    watches.delete('meta.import.arguments')
+                  end
+                when 'namespace::clean'
+                  # Privatize every sub already declared in this package
+                  s[index..-1].select { |e| e.is_a?(Sub) }.each do |sub|
+                    sub.visibility = :private
+                  end
+                end
+              end
+
+              s << pkg
+            end,
+
+            # Watch for individual comment lines
+            'meta.comment.full-line' => proc do |s, e|
+              case e[:content]
+                # Group detection
+                when /#\s*@group\s+(.*)/ then group = $1
+                when /#\s*@endgroup/     then group = nil
+              end
+            end,
+
+            # Watch for named function declarations
+            'meta.function.named' => proc do |s, e|
+              sub = Sub.new(e)
+              sub.comments = s.pop.to_s if s.last.is_a? Comment
+              sub.group    = group      unless group.nil?
+
+              # Watch for the function name
+              watches['entity.name.function'] = proc do |_, e|
+                sub.name = e[:content]
+                watches.delete('entity.name.function')
+              end
+
+              # Watch for the function body
+              watches['meta.scope.function'] = proc do |_, e|
+                sub.body = e[:content]
+                watches.delete('meta.scope.function')
+              end
+
+              s << sub
             end
+          }
+
+          @processor.map do |x|
+            x[:filename] = @filename
+            x[:content]  = x[:content][x[:range]]
           end
 
-          reduce_stack
-
-          self
+          @stack = @processor.inject([]) do |stack, elem|
+            watches.each_pair do |key, val|
+              val[stack, elem] if elem[:scope] == key
+            end
+            stack
+          end
         end
 
         def enumerator
           @stack
         end
+      end
 
-        private
+      class Processor
+        class Scope
+          def initialize(name)
+            @scope = name.split('.')
+          end
 
-        def prepare_method(element)
-          if @method
-            @method = false if element.text =~ /^#{@method}\}\s*$/
-          else
-            @method = $1 || '' unless element.text =~ /^(\s*)sub.*\}\s*$/
+          def ==(obj)
+            obj.split('.').each_with_index do |element, index|
+              element == @scope[index] or return false
+            end
+            return true
           end
         end
 
-        def reduce_stack
-          @method = false
+        def initialize(filename)
+          @file = filename
+          @line = ''
+          @lnum = 0
 
-          @stack = @stack.reduce([]) do |stack, element|
-            if stack.empty?
-              prepare_method(element) if element.is_a? Sub
-            elsif @method
-              prepare_method(element)
-              stack.last.text << element.text
-              next stack
-            else
-              last = stack.last
+          @cache = []
+          @stash = []
+        end
 
-              case element
-              when :private
-                stack.select { |e| e.is_a? Sub }.each { |e| e.visibility = :private }
-              when Package
-                element.comments = last.read if last.is_a? Comment
-              when Sub
-                element.comments = last.read if last.is_a? Comment
-                prepare_method(element)
-              when Comment
-                if last.is_a? Comment
-                  last.text << element.text
-                else
-                  stack << element
-                end
-                next stack
-              end
-            end
+        def start_parsing(name); end
+        def end_parsing(name);   end
 
-            stack << element
+        def new_line(line)
+          @line = line
+          @lnum += 1
+          @stash.each { |x| x[:content] << @line }
+        end
+
+        def open_tag(name, pos)
+          obj = {
+            :scope_name => name,
+            :scope => Scope.new(name),
+            :lnum => @lnum,
+            :range => (pos..-1),
+            :content => @line.dup
+          }
+          @cache << (obj)
+          @stash.unshift(obj)
+        end
+
+        def close_tag(name, pos)
+          @stash.each do |x|
+            x[:range] = x[:range].begin...(x[:content].length - @line.length + pos)
           end
+          @stash.delete_at(@stash.index { |e| e[:scope_name] == name })
+        end
 
-          warn 'Whoops! Misparsed something...' if @method
+        include Enumerable
+        def each(*args, &blk)
+          @cache.each(*args, &blk)
         end
       end
     end
