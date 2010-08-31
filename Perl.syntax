@@ -481,6 +481,7 @@ patterns:
     "2": 
       name: entity.name.type.class.perl
   begin: '(?<=\W|^)\s*(package)\s+(\S+)\s*;'
+  end: '(?<=\W|^)\s*(?=package)'
   patterns:
     - include: $self
 - name: meta.function.predeclared.perl
