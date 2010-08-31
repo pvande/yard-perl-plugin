@@ -17,7 +17,6 @@ module YARD
     module Perl
       autoload :Base,             __p('handlers', 'perl', 'base')
       autoload :PackageHandler,   __p('handlers', 'perl', 'package_handler')
-      autoload :BaseClassHandler, __p('handlers', 'perl', 'base_class_handler')
       autoload :SubHandler,       __p('handlers', 'perl', 'sub_handler')
     end
     Processor.register_handler_namespace :perl, Perl

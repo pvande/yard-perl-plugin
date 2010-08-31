@@ -1,5 +1,3 @@
-require 'textpow'
-
 module YARD
   module Templates
     module Helpers

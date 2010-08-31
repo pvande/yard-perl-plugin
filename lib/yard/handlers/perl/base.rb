@@ -13,12 +13,6 @@ module YARD
         end
 
         include Parser::Perl
-
-        class NamespaceObject < NamespaceObject
-          def inheritance_tree(include_mods = false)
-            return [self]
-          end
-        end
       end
     end
   end
