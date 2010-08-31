@@ -615,7 +615,18 @@ patterns:
 - name: constant.language.perl
   match: \b(__FILE__|__LINE__|__PACKAGE__)\b
 - name: keyword.control.perl
-  match: (?<!->)\b(continue|die|do|else|elsif|exit|for|foreach|goto|if|last|next|redo|return|select|unless|until|wait|while|switch|case|package|require|use|eval)\b
+  match: (?<!->)\b(continue|die|do|else|elsif|exit|for|foreach|goto|if|last|next|redo|return|select|unless|until|wait|while|switch|case|package|require|eval)\b
+- name: meta.import.perl
+  beginCaptures:
+    "1":
+      name: keyword.control.perl
+    "2":
+      name: meta.import.package
+  begin: (?<!->)\b(use)\s+([\w:]+)\s*
+  contentName: meta.import.arguments
+  end: ;
+  patterns:
+  - include: "#nested_braces"
 - name: storage.modifier.perl
   match: \b(my|our|local)\b
 - name: keyword.operator.filetest.perl
