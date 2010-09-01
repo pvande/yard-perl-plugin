@@ -25,7 +25,7 @@ module YARD
       class Comment < Code
         def to_s
           str = @content.gsub(/^\s*#/, '')
-          str.gsub!(/^ /, '') while str.all? { |line| line =~ /^ |^$/ }
+          str.gsub!(/^ /, '') while str.any? { |line| line =~ /^ / } && str.all? { |line| line =~ /^ |^$/ }
           str
         end
       end
