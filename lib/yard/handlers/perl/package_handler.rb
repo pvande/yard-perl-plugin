@@ -2,6 +2,8 @@ class YARD::Handlers::Perl::PackageHandler < YARD::Handlers::Perl::Base
   handles Package
 
   process do
+    return $__PACKAGE__ = YARD::Registry.root if statement.classname == 'main'
+
     docstring = statement.comments
     x = P(statement.namespace)
 
