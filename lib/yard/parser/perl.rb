@@ -20,6 +20,10 @@ module YARD
         def inspect
           "<#{self.class} #{@name} #{@filename}:#{@line}>"
         end
+
+        def show
+          "sub #{@name} in #{@filename}:#{@line}"
+        end
       end
 
       class Comment < Code
