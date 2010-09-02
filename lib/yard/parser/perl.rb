@@ -63,10 +63,11 @@ module YARD
 
           @parameters = [].tap do |params|
             @body.strip.take_while do |line|
-              if line.strip    =~ /my\s+\((.*?)\)\s*=\s*@_\s*;/
-                params.push *$1.split(/\s*(?:,|=>)\s*/)
-              elsif line.strip =~ /my\s+(.*?)\s*=\s*shift(\(@_\))?\s*;/
+              if line.strip =~ /my\s+(.*?)\s*=\s*shift(\(\s*@_\s*\))?\s*;/
                 params << $1
+              elsif line.strip =~ /my\s+\((.*?)\)\s*=\s*@_\s*;/
+                  params.push *$1.split(/\s*(?:,|=>)\s*/)
+                  false
               else
                 false
               end
