@@ -32,6 +32,10 @@ module YARD
           str.gsub!(/^ /, '') while str.any? { |line| line =~ /^ / } && str.all? { |line| line =~ /^ |^$/ }
           str
         end
+
+        def lines
+          @line...(@line - 1 + @content.split("\n").length)
+        end
       end
 
       class Package < Code
@@ -88,7 +92,7 @@ module YARD
             # Watch for 'package' declarations
             'meta.class' => proc do |s, e|
               pkg = Package.new(e)
-              pkg.comments = s.pop.to_s if s.last.is_a? Comment
+              pkg.comments = s.pop.to_s if s.last.is_a?(Comment) && s.last.lines.end == (pkg.line - 1)
               index = s.length
 
               # Watch for the package name
@@ -129,7 +133,7 @@ module YARD
             # Watch for named function declarations
             'meta.function.named' => proc do |s, e|
               sub = Sub.new(e)
-              sub.comments = s.pop.to_s if s.last.is_a? Comment
+              sub.comments = s.pop.to_s if s.last.is_a?(Comment) && s.last.lines.end == (sub.line - 1)
               sub.group    = group      unless group.nil?
 
               # Watch for the function name
