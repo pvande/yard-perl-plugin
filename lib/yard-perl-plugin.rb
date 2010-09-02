@@ -24,6 +24,7 @@ module YARD
 
   module Tags
     Library.define_tag "Method Scope", :scope
+    Library.define_tag "Alias For",    :alias, :with_name
   end
 
   module Serializers
