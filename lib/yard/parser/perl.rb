@@ -153,10 +153,7 @@ module YARD
             end
           }
 
-          @processor.map do |x|
-            x[:filename] = @filename
-            x[:content]  = x[:content][x[:range]]
-          end
+          @processor.map { |x| x[:filename] = @filename }
 
           @stack = @processor.inject([]) do |stack, elem|
             watches.each_pair do |key, val|
@@ -216,10 +213,9 @@ module YARD
         end
 
         def close_tag(name, pos)
-          @stash.each do |x|
-            x[:range] = x[:range].begin...(x[:content].length - @line.length + pos)
-          end
-          @stash.delete_at(@stash.index { |e| e[:scope_name] == name })
+          closed = @stash.delete_at(@stash.index(@stash.find { |e| e[:scope_name] == name }))
+          start = closed.delete(:range).begin
+          closed[:content] = closed[:content][start...(pos - @line.length)]
         end
 
         include Enumerable
