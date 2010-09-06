@@ -27,14 +27,6 @@ module YARD
     Library.define_tag "Alias For",    :alias, :with_name
   end
 
-  module Serializers
-    autoload :PODSerializer, __p('serializers', 'pod_serializer')
-  end
-
-  module Formatters
-    autoload :PODFormatter, __p('formatters', 'pod_formatter')
-  end
-
   module Templates
     module Helpers
       module HtmlHelper
@@ -44,11 +36,7 @@ module YARD
           html_syntax_highlight_perl(source)
         end
       end
-
-      autoload :PODHelper, __p('templates', 'helpers', 'pod_helper')
     end
-
-    Engine.register_template_path __p('..', '..', 'templates')
   end
 end
 
