@@ -50,8 +50,6 @@ At present, this module will:
  * Provide syntax highlighting for HTML output
    * Support for this is provided by Textpow, via the TextMate Perl.plist
    (slightly modified)
- * Provide a POD output formatter
-   * Don't expect miracles yet, though.
 
 This module *won't*:
 
