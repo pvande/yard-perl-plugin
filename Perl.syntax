@@ -32,12 +32,12 @@ repository:
           name: comment.line.number-sign.perl
         "2": 
           name: punctuation.definition.comment.perl
-      match: ^((#).*$\n?)
+      match: ^((#).*)
     - name: comment.line.number-sign.perl
       captures: 
         "1": 
           name: punctuation.definition.comment.perl
-      match: (#).*$\n?
+      match: (#).*
   nested_parens_interpolated: 
     begin: \(
     captures: 
