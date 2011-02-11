@@ -9,6 +9,7 @@ class YARD::Handlers::Perl::PackageHandler < YARD::Handlers::Perl::Base
 
     statement.comments = ''
     pieces = statement.namespace.split('::')
+    pieces.shift if pieces.first.empty?
     pieces = pieces.inject([]) { |acc, e| acc << [acc.last, e].join('::') }
     pieces = pieces.map { |e| P(e) }.select { |e| e.is_a?(Proxy) }
     pieces.each { |e| register ModuleObject.new(e.namespace, e.name) }
