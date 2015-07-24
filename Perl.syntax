@@ -3,8 +3,7 @@ scopeName: source.perl
 name: Perl
 keyEquivalent: ^~P
 comment: |
-  
-  	TODO:	Include RegExp syntax
+  TODO: Include RegExp syntax
 
 repository: 
   nested_ltgt: 
